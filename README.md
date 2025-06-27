@@ -1,90 +1,41 @@
 # A Comparative Study of Classical Heuristics and Reinforcement Learning for the TSP
 
+[**View the Full Project Report (PDF)**](https://liu-zhonglin.github.io/Christofides-vs-RL-for-TSP/Project%20Report/Report.pdf)
+
 **Course:** HKU MATH3999: Directed Studies in Mathematics  
 **Author:** Liu Zhonglin  
 **Supervisor:** Prof. Zang Wenan
 
 ---
 
-## Overview
+## Project Overview
 
-This repository contains the full implementation for a directed study project comparing classical algorithms and deep reinforcement learning for solving the Traveling Salesman Problem (TSP). The project evaluates four distinct methods on 30-city TSP instances:
+This repository archives a directed study project that implements and compares multiple methodologies for solving the Traveling Salesman Problem (TSP). The core of the study is a robust, quantitative evaluation of four distinct approaches on 30-city TSP instances:
 
-1.  A **Classical Heuristic** based on the Christofides algorithm (using a scalable greedy matching approach).
-2.  A **Pure Reinforcement Learning** model (Pointer Network) trained from scratch with the REINFORCE algorithm.
-3.  A **Hybrid REINFORCE Model** that uses the Christofides tour to structure the input sequence for the RL agent.
-4.  An **Advanced Hybrid Actor-Critic Model** that uses the same structured input but is trained with a more stable A2C-style algorithm.
+1.  **Classical Heuristic:** A scalable implementation of the Christofides algorithm.
+2.  **Pure Reinforcement Learning:** A Pointer Network trained from scratch using the REINFORCE algorithm.
+3.  **Hybrid RL (REINFORCE):** A Pointer Network trained on input sequences that were pre-ordered using the Christofides algorithm.
+4.  **Hybrid RL (Actor-Critic):** An advanced version of the hybrid model trained with a more stable Actor-Critic algorithm.
 
-The primary finding is that while the classical Christofides algorithm remains superior in both solution quality and speed, the method of integrating its structural knowledge into the RL training process significantly enhances performance over a pure learning approach.
+The goal was to quantify the performance trade-offs between classical, theory-driven algorithms and modern, learning-based approaches, and to investigate whether hybridizing these methods could yield superior results.
 
 ## Final Results
 
-The following table presents the final, robust average results from evaluating each method over **1000 unique, randomly generated 30-city TSP problems**.
+The definitive results were obtained by evaluating each method over **1000 unique, randomly generated 30-city TSP problems**. The final average performance is summarized below.
 
 | Metric                 | Christofides | Pure RL         | Hybrid (REINFORCE) | Hybrid (Actor-Critic) |
 | ---------------------- | ------------ | --------------- | ------------------ | --------------------- |
 | **Avg. Tour Length** | **5.3280** | 11.9893         | 10.4065            | **10.3216** |
 | **Avg. Comp. Time (s)**| **0.0005** | 0.0232          | 0.0228             | 0.0229                |
 
+## Conclusion
 
-## File Structure
+The study yielded two primary conclusions:
 
-The project is organized into several key Python scripts:
+1.  **Classical algorithms remain superior** for this well-defined problem, with the Christofides algorithm decisively outperforming all RL models in both solution quality and speed.
+2.  **Hybridization is a powerful strategy.** Both hybrid RL models, which leveraged the structural knowledge from Christofides to order their input, found significantly better solutions than the pure RL agent. The more advanced Actor-Critic algorithm demonstrated a further, measurable improvement over the simpler REINFORCE hybrid.
 
--   `christofides.py`: A scalable implementation of the classical Christofides algorithm.
--   `actor_critic_model.py`: Contains the PyTorch class definitions for the `Actor` (Pointer Network) and `Critic` models.
--   `train_pure_rl_30.py`: The script to train the "Pure RL" model from scratch.
--   `train_hybrid_30.py`: The script to train the "Hybrid (REINFORCE)" model.
--   `train_actor_critic.py`: The script to train the final, advanced "Hybrid (Actor-Critic)" model.
--   `final_robust_evaluation.py`: The master script to run the final 4-way comparison and generate the results table.
-
-## Setup and Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/YourUsername/Christofides-vs-RL-for-TSP.git](https://github.com/YourUsername/Christofides-vs-RL-for-TSP.git)
-    cd Christofides-vs-RL-for-TSP
-    ```
-
-2.  **Create a Python virtual environment:**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
-
-3.  **Install the required packages:** A `requirements.txt` file is included for easy installation.
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## How to Run
-
-You can replicate the entire project by running the training scripts followed by the final evaluation.
-
-1.  **Train the Models (Optional, as pre-trained models can be provided):**
-    ```bash
-    # Train the Pure RL model
-    python train_pure_rl_30.py
-
-    # Train the REINFORCE Hybrid model
-    python train_hybrid_30.py
-
-    # Train the Actor-Critic Hybrid model
-    python train_actor_critic.py
-    ```
-
-2.  **Run the Final Evaluation:** This script requires the `.pth` model files from the training scripts to be present in the directory.
-    ```bash
-    python final_robust_evaluation.py
-    ```
-    This will run the full 1000-trial evaluation and print the final results table to the console.
-
-## Proposed Future Work
-
-This study revealed several promising avenues for future research:
-* **Advanced Architectures:** Replacing the LSTM-based Pointer Network with a Graph Attention Network (GAT) to better capture the geometric structure of the TSP.
-* **Hyperparameter Tuning:** Performing a systematic search for optimal hyperparameters (learning rate, hidden dimensions, etc.) to potentially improve RL model performance further.
-* **Alternative Hybridization:** Exploring different hybrid methods, such as using the RL agent to select between classical heuristics (e.g., 2-Opt, 3-Opt) to apply to a tour.
+This work suggests that the most promising direction for applying RL to complex optimization problems lies in creating sophisticated hybrid systems where classical heuristics guide the powerful, flexible learning capabilities of neural networks.
 
 ## License
 
