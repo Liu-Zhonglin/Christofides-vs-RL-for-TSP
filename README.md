@@ -10,32 +10,39 @@
 
 ## Project Overview
 
-This repository archives a directed study project that implements and compares multiple methodologies for solving the Traveling Salesman Problem (TSP). The core of the study is a robust, quantitative evaluation of four distinct approaches on 30-city TSP instances:
+This repository archives a directed study project that implements and compares multiple methodologies for solving the Traveling Salesman Problem (TSP). The core of the study is a robust, quantitative evaluation of five distinct approaches on both 30-city and 100-city TSP instances:
 
-1.  **Classical Heuristic:** A scalable implementation of the Christofides algorithm.
-2.  **Pure Reinforcement Learning:** A Pointer Network trained from scratch using the REINFORCE algorithm.
-3.  **Hybrid RL (REINFORCE):** A Pointer Network trained on input sequences that were pre-ordered using the Christofides algorithm.
-4.  **Hybrid RL (Actor-Critic):** An advanced version of the hybrid model trained with a more stable Actor-Critic algorithm.
+1. **Classical Heuristic (Christofides):** A scalable implementation of the Christofides algorithm.
+2. **Classical Heuristic (Nearest Insertion):** A greedy constructive heuristic.
+3. **Pure Reinforcement Learning:** A Pointer Network trained from scratch using the REINFORCE algorithm.
+4. **Hybrid RL (REINFORCE):** A Pointer Network trained on input sequences that were pre-ordered using the Christofides algorithm.
+5. **Hybrid RL (Actor-Critic):** An advanced version of the hybrid model trained with a more stable Actor-Critic algorithm.
 
-The goal was to quantify the performance trade-offs between classical, theory-driven algorithms and modern, learning-based approaches, and to investigate whether hybridizing these methods could yield superior results.
+The goal was to quantify the performance trade-offs between classical, theory-driven algorithms and modern, learning-based approaches, and to investigate whether hybridizing these methods could yield superior results, especially at a larger scale.
 
 ## Final Results
 
-The definitive results were obtained by evaluating each method over **1000 unique, randomly generated 30-city TSP problems**. The final average performance is summarized below.
+The definitive results were obtained by evaluating each method over **1000 unique, randomly generated problems** for both the 30-city and 100-city scales. The final average performance is summarized below.
 
-| Metric                 | Christofides | Pure RL         | Hybrid (REINFORCE) | Hybrid (Actor-Critic) |
-| ---------------------- | ------------ | --------------- | ------------------ | --------------------- |
-| **Avg. Tour Length** | **5.3280** | 11.9893         | 10.4065            | **10.3216** |
-| **Avg. Comp. Time (s)**| **0.0005** | 0.0232          | 0.0228             | 0.0229                |
+#### Average Tour Length Comparison
 
-## Conclusion
+| Method                  | 30 Cities (Avg. Length) | 100 Cities (Avg. Length) |
+| ----------------------- | ----------------------- | ------------------------ |
+| **Nearest Insertion** | **5.2107** | **9.3125** |
+| **Christofides** | 5.3300                  | 9.3701                   |
+| **Hybrid (Actor-Critic)** | 10.3699                 | **9.3705** |
+| **Hybrid (REINFORCE)** | 10.5369                 | 26.9063                  |
+| **Pure RL** | 11.9242                 | 32.4112                  |
 
-The study yielded two primary conclusions:
+## Key Conclusions
 
-1.  **Classical algorithms remain superior** for this well-defined problem, with the Christofides algorithm decisively outperforming all RL models in both solution quality and speed.
-2.  **Hybridization is a powerful strategy.** Both hybrid RL models, which leveraged the structural knowledge from Christofides to order their input, found significantly better solutions than the pure RL agent. The more advanced Actor-Critic algorithm demonstrated a further, measurable improvement over the simpler REINFORCE hybrid.
+This study yielded three primary conclusions:
 
-This work suggests that the most promising direction for applying RL to complex optimization problems lies in creating sophisticated hybrid systems where classical heuristics guide the powerful, flexible learning capabilities of neural networks.
+1. **Classical Heuristics Remain Superior:** For the standard Euclidean TSP, classical algorithms like Nearest Insertion and Christofides are dominant, providing the best solutions with unparalleled speed.
+
+2. **Hybridization is a Powerful Strategy:** The performance of RL agents was dramatically improved when they were provided with a high-quality input sequence structured by the Christofides algorithm. This confirms that integrating classical domain knowledge is a highly effective strategy.
+
+3. **Advanced Training is Critical for Scaling:** The most striking result was the performance of the Actor-Critic hybrid model on the 100-city problem. It achieved a tour length statistically identical to the classical heuristics, a feat the simpler REINFORCE hybrid could not come close to. This demonstrates that stable, advanced training algorithms are essential for RL models to learn competitive policies for complex, large-scale problems.
 
 ## License
 
