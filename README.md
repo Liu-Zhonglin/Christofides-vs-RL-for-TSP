@@ -2,7 +2,7 @@
 
 [**View the Full Project Report (PDF)**](https://liu-zhonglin.github.io/Christofides-vs-RL-for-TSP/Project%20Report/Report.pdf)
 
-**Course:** HKU MATH3999: Directed Studies in Mathematics  
+**Capstone Course:** HKU MATH3999: Directed Studies in Mathematics  
 **Author:** Liu Zhonglin  
 **Supervisor:** Prof. Zang Wenan
 
